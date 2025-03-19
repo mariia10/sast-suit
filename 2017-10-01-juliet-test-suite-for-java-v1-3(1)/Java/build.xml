@@ -1,7 +1,7 @@
 <project default="compile">
 
     <macrodef name="cwes">
-      <attribute name="target" />
+      <attribute name="target"/>
       <sequential>
         <subant target="@{target}">
           <fileset dir="src" includes="*/*/build.xml" />
