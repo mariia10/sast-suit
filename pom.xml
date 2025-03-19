@@ -149,8 +149,6 @@
                                 </configfiles>
                                 <home>${project.build.directory}/tomcat${tomcat.major.version}x</home>
                                 <properties>
-                                    <sonar.organization>mariia10</sonar.organization>
-                                    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
                                     <cargo.servlet.port>8443</cargo.servlet.port>
                                     <cargo.protocol>https</cargo.protocol>
                                     <cargo.tomcat.connector.protocolClass>HTTP/1.1</cargo.tomcat.connector.protocolClass>
@@ -1251,6 +1249,8 @@
         <!-- Spring 6.x requires Java 17 -->
         <version.springframework>5.3.39</version.springframework>
         <!-- Tomcat 10 moves from Java EE to Jakarta EE, moving packages javax.* to jakarta.* - code changes likely required to address this change. -->
+        <sonar.organization>mariia10</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <tomcat.major.version>9</tomcat.major.version>
         <version.tomcat>9.0.97</version.tomcat>
         <tomcat.url>https://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${version.tomcat}/bin/apache-tomcat-${version.tomcat}.zip</tomcat.url>
