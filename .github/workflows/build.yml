@@ -34,5 +34,5 @@ jobs:
         env:
           SONAR_TOKEN: 005d7298cdfb54733af746b3d14b1f93edc311cc
         run: |
-          cd sast-suit/Java  # Change directory to where the pom.xml file is located
+          cd sast-suit  # Change directory to where the pom.xml file is located
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mariia10_sast-suit
