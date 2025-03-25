@@ -32,6 +32,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
-          SONAR_TOKEN: 005d7298cdfb54733af746b3d14b1f93edc311cc
+          SONAR_TOKEN: 18e992cd25d6a958f2a5eb5d23d82daf34a63784
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mariia10_sast-suit
