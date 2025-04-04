@@ -17,4 +17,4 @@ jobs:
         curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
 
     - name: Running Horusec Security
-      run: horusec start -p="./" -e="true" -s="HIGH" -o="./results.csv"
+      run: horusec start -p="./" -e="true" -s="HIGH" -o="csv" -O="./results.csv"
