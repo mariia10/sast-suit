@@ -1,4 +1,4 @@
-name: Build with PMD
+name: Build and SpotBugs Analysis
 on: [push, pull_request]
 jobs:
   build:
@@ -10,8 +10,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '11'
-      - name: Run PMD analysis
-        run: mvn pmd:pmd
+      - name: Build with Maven and SpotBugs
+        run: mvn clean install spotbugs:check
 
 
 
