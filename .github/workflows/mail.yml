@@ -1,24 +1,21 @@
-name: Java CI
+name: SecurityPipeline
 
 on: [push]
 
 jobs:
-  build:
+  horusec-security:
+    name: horusec-security
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Check out code
+      uses: actions/checkout@v2
       with:
-        java-version: 1.8
-    - uses: actions/cache@v1
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    - name: Build with Maven
-      run: mvn -B verify spotbugs:spotbugs
-    - uses: jwgmeligmeyling/spotbugs-github-action@master
-      with:
-        path: '**/spotbugsXml.xml'
+        fetch-depth: 0
+        
+    - name: Install Horusec
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+
+    - name: Running Horusec Security
+      run: horusec start -D -p="./" -s="HIGH" -o="json" -O="./results.json"
+    timeout-minutes: 15
