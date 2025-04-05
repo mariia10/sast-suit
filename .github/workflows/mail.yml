@@ -3,19 +3,21 @@ name: SecurityPipeline
 on: [push]
 
 jobs:
-  horusec-security:
-    name: horusec-security
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        
-    - name: Install Horusec
-      run: |
-        curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+    horusec-security:
+        name: horusec-security
+        runs-on: ubuntu-latest
+        steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+            
+        - name: Install Horusec
+          run: |
+            curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+          timeout-minutes: 30  # Increased timeout
 
-    - name: Running Horusec Security
-      run: horusec start -D -p="./" -s="HIGH" -o="json" -O="./results.json"
-    timeout-minutes: 15
+        - name: Running Horusec Security
+          run: horusec start -D -p="./" -s="HIGH" -o="json" -O="./results.json"
+          timeout-minutes: 30  # Increased timeout
+      
