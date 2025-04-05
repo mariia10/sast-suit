@@ -23,8 +23,7 @@ jobs:
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
-        with:
-          queries: +security-extended
+        with: 
           languages: ${{ matrix.language }}
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
@@ -34,3 +33,6 @@ jobs:
       # Perform CodeQL Analysis
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
+        with:
+          category: security-analysis
+          output: codeql-results.csar 
