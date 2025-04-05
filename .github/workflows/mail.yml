@@ -13,12 +13,7 @@ jobs:
     - name: Build with Maven and SpotBugs
       run: mvn clean install spotbugs:check
     - name: Upload SpotBugs report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2  # Changed to v2 as a test
       with:
         name: spotbugs-report
         path: spotbugs-findbugs.csv
-
-
-
-
-      
