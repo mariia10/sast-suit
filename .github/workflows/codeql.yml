@@ -30,6 +30,9 @@ jobs:
         with:
           category: 'security-and-quality'
           output: sarif # Specify output format (SARIF)
+        env:
+          ACTIONS_STEP_DEBUG: true # Включите отладку для более подробного вывода
+        
 
       - name: List files in current directory
         run: ls -la # This will help you see if results.sarif exists
@@ -40,12 +43,12 @@ jobs:
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: results.sarif # Make sure that results.sarif matches the expected output
+          sarif_file:  security-and-quality.sarif # Make sure that results.sarif matches the expected output
 
-      - name: Print CWE results (optional)
+      - name: Extract CWE results to JSON
         run: |
-          if [ -f results.sarif ]; then
-            jq '.runs[].results[] | select(.ruleId | startswith("CWE-"))' results.sarif || echo "No CWE results found"
-          else
-            echo "results.sarif does not exist"
-          fi
+          if [ -f security-and-quality.sarif ]; then
+              jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' security-and-quality.sarif > cwe_results.json || echo "No CWE results found"
+            else
+              echo "security-and-quality.sarif does not exist"
+            fi
