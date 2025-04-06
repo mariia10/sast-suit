@@ -1,31 +1,29 @@
-name: CodeQL Analysis
+name: CodeQL
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+    
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: 'java' # Укажите языки, которые вы используете
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+          # Optionally, specify other configurations like paths or build commands
 
-    - name: Run CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        upload: 'true'
+      - name: Build
+        run: mvn clean install # or your build command
 
-    - name: Post CodeQL Results
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: codeql-results.sarif
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: 'security-and-quality'
