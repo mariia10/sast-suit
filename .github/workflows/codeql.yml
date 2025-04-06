@@ -29,17 +29,3 @@ jobs:
         with:
           category: 'security-and-quality' # Keep this as is for analysis
           output: sarif
-
-      - name: Upload SARIF results
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: /home/runner/work/sast-suit/sast-suit/sarif/java.sarif
-          category: 'unique-category-for-upload' # Change this to a unique category to avoid conflicts
-
-      - name: Extract CWE results to JSON
-        run: |
-          if [ -f /home/runner/work/sast-suit/sast-suit/sarif/java.sarif ]; then
-              jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' /home/runner/work/sast-suit/sast-suit/sarif/java.sarif > cwe_results.json || echo "No CWE results found"
-            else
-              echo "/home/runner/work/sast-suit/sast-suit/sarif/java.sarif does not exist"
-            fi 
