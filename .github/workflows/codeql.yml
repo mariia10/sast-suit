@@ -29,14 +29,6 @@ jobs:
         with:
           category: 'security-and-quality' # Keep this as is for analysis
           output: sarif
-        env:
-          ACTIONS_STEP_DEBUG: true
-
-      - name: List files in current directory
-        run: ls -la
-
-      - name: Check contents of results.sarif
-        run: cat /home/runner/work/sast-suit/sast-suit/sarif/java.sarif || echo "java.sarif does not exist"
 
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v3
