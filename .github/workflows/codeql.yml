@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: java
           # Optionally, specify other configurations like paths or build commands
@@ -27,3 +27,10 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: 'security-and-quality'
+          output: sarif # Specify output format (SARIF)
+
+      - name: Upload SARIF file
+        uses: actions/upload-artifact@v2
+        with:
+          name: codeql-sarif
+          path: ./github/codeql/autobuild/*.sarif
