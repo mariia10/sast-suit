@@ -43,12 +43,12 @@ jobs:
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file:  security-and-quality.sarif # Make sure that results.sarif matches the expected output
+          sarif_file:  /home/runner/work/sast-suit/sast-suit/sarif/java.sarif # Make sure that results.sarif matches the expected output
 
       - name: Extract CWE results to JSON
         run: |
-          if [ -f security-and-quality.sarif ]; then
+          if [ -f /home/runner/work/sast-suit/sast-suit/sarif/java.sarif ]; then
               jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' security-and-quality.sarif > cwe_results.json || echo "No CWE results found"
             else
-              echo "security-and-quality.sarif does not exist"
+              echo "/home/runner/work/sast-suit/sast-suit/sarif/java.sarif does not exist"
             fi
