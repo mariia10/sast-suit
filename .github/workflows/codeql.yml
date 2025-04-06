@@ -34,6 +34,9 @@ jobs:
       - name: List files in current directory
         run: ls -la # This will help you see if results.sarif exists
 
+      - name: Check contents of results.sarif
+        run: cat results.sarif || echo "results.sarif does not exist"
+        
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v2
         with:
