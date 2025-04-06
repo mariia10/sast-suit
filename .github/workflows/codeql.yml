@@ -21,7 +21,7 @@ jobs:
         languages: 'java' # Укажите языки, которые вы используете
 
     - name: Run CodeQL Analysis
-      uses: github/codeql-action/@v3
+      uses: github/codeql-action/analyze@v3
       with:
         upload: 'true'
 
