@@ -27,7 +27,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: 'security-and-quality' # You can keep this as is for analysis
+          category: 'security-and-quality' # Keep this as is for analysis
           output: sarif
         env:
           ACTIONS_STEP_DEBUG: true
@@ -36,7 +36,7 @@ jobs:
         run: ls -la
 
       - name: Check contents of results.sarif
-        run: cat results.sarif || echo "results.sarif does not exist"
+        run: cat /home/runner/work/sast-suit/sast-suit/sarif/java.sarif || echo "java.sarif does not exist"
 
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v3
@@ -50,4 +50,4 @@ jobs:
               jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' /home/runner/work/sast-suit/sast-suit/sarif/java.sarif > cwe_results.json || echo "No CWE results found"
             else
               echo "/home/runner/work/sast-suit/sast-suit/sarif/java.sarif does not exist"
-            fi
+            fi 
