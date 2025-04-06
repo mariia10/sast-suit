@@ -35,10 +35,10 @@ jobs:
         run: ls -la # This will help you see if results.sarif exists
 
       - name: Check contents of results.sarif
-        run: cat results.sarif || echo "results.sarif does not exist"
-        
+        run: cat ../results.sarif || echo "results.sarif does not exist"
+
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results.sarif
+          sarif_file: ../results.sarif
         
