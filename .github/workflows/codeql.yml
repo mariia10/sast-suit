@@ -18,10 +18,10 @@ jobs:
     - name: Set up CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: 'javascript,python' # Укажите языки, которые вы используете
+        languages: 'java' # Укажите языки, которые вы используете
 
     - name: Run CodeQL Analysis
-      uses: github/codeql-action/run@v2
+      uses: github/codeql-action/@v3
       with:
         upload: 'true'
 
