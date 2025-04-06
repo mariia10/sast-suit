@@ -20,22 +20,20 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: java
-          # Optionally, specify other configurations like paths or build commands
 
       - name: Build
-        run: mvn clean install # or your build command
+        run: mvn clean install 
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: 'security-and-quality'
-          output: sarif # Specify output format (SARIF)
+          category: 'security-and-quality' # You can keep this as is for analysis
+          output: sarif
         env:
-          ACTIONS_STEP_DEBUG: true # Включите отладку для более подробного вывода
-        
+          ACTIONS_STEP_DEBUG: true
 
       - name: List files in current directory
-        run: ls -la # This will help you see if results.sarif exists
+        run: ls -la
 
       - name: Check contents of results.sarif
         run: cat results.sarif || echo "results.sarif does not exist"
@@ -43,12 +41,13 @@ jobs:
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file:  /home/runner/work/sast-suit/sast-suit/sarif/java.sarif # Make sure that results.sarif matches the expected output
+          sarif_file: /home/runner/work/sast-suit/sast-suit/sarif/java.sarif
+          category: 'unique-category-for-upload' # Change this to a unique category to avoid conflicts
 
       - name: Extract CWE results to JSON
         run: |
           if [ -f /home/runner/work/sast-suit/sast-suit/sarif/java.sarif ]; then
-              jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' security-and-quality.sarif > cwe_results.json || echo "No CWE results found"
+              jq '[.runs[].results[] | select(.ruleId | startswith("CWE-")) | {cweId: .ruleId, message: .message, locations: .locations}]' /home/runner/work/sast-suit/sast-suit/sarif/java.sarif > cwe_results.json || echo "No CWE results found"
             else
               echo "/home/runner/work/sast-suit/sast-suit/sarif/java.sarif does not exist"
             fi
