@@ -31,8 +31,11 @@ jobs:
           category: 'security-and-quality'
           output: sarif # Specify output format (SARIF)
 
+      - name: List files in current directory
+        run: ls -la # This will help you see if results.sarif exists
+
       - name: Upload SARIF results
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: /home/mariia/Study/магистратура/sast-suit/.github/workflows/results.sarif
+          sarif_file: ./results.sarif
         
