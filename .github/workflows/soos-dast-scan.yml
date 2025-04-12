@@ -38,8 +38,8 @@ jobs:
       - name: Run SOOS DAST Analysis
         uses: soos-io/soos-dast-github-action@a7eb40b94c1c81eb76b178ba1befdc21823f86fa
         with:
-          client_id: ${{ secrets.SOOS_CLIENT_ID }}
-          api_key: ${{ secrets.SOOS_API_KEY }}
+          client_id: op5yzx65t
+          api_key: ZGJkOWYzNmItM2NhYS00OTk0LTkyNWQtMzc5NjJhNTM1YjI5
           project_name: "<YOUR-PROJECT-NAME>"
           scan_mode: "baseline"
           target_url: "https://www.example.com/"
