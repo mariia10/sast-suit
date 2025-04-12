@@ -25,14 +25,11 @@ jobs:
       - name: Build Docker image
         run: |
           cd VMs  # Переходим в папку с Dockerfile
-          chmod +x buildDockerImage.sh  
+          chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
-          
-      - name: Run Docker container
-        run: |
-          cd VMs  # Переходим в папку с Dockerfile
+        
           chmod +x runDockerImage.sh  
-          ./runDockerImage.sh  
+          ./runDockerImage.sh &  
 
       - name: Wait for the application to start
         run: sleep 30  # Даем время приложению запуститься (можно настроить по необходимости)
