@@ -16,8 +16,18 @@ jobs:
       - name: Check out Repo!
         uses: actions/checkout@v2
       # Next, the action builds and runs the Javaspringvulny application in a Docker container
-      - name: Build and Run Vulny!
-        run: ./runBenchmark.sh &
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: ./VMs/buildDockerImage.sh
+
+      - name: Run Docker container
+        run: ./VMs/runDockerImage.sh # Замените 8080 на порт вашего приложения
+
+      - name: Wait for the application to start
+        run: sleep 30  # Даем время приложению запуститься (можно настроить по необходимости)
+
       # Afterwards, the action pulls down the correct version of HawkScan, in this instance 2.0.0. Then it runs HawkScan
       # against the application using the referenced API Key that was saved to the repo as a secret, and the HawkScan
       # configuration file stackhawk-actions.yml. It also stores information about the pull request event including the
