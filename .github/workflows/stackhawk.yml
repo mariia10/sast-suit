@@ -33,6 +33,16 @@ jobs:
       - name: Wait for the application to start
         run: sleep 30  # Даем время приложению запуститься (можно настроить по необходимости)
 
+      - name: Check application logs
+        run: |
+          docker logs your-app-container-name || true  # Получаем логи приложения
+
+      - name: Check if the application is running
+        run: |
+          if ! curl --silent --fail http://localhost:8443; then
+            echo "Application is not reachable"
+            exit 1
+          fi
       # Afterwards, the action pulls down the correct version of HawkScan, in this instance 2.0.0. Then it runs HawkScan
       # against the application using the referenced API Key that was saved to the repo as a secret, and the HawkScan
       # configuration file stackhawk-actions.yml. It also stores information about the pull request event including the
