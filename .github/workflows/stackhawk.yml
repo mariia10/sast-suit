@@ -27,7 +27,7 @@ jobs:
           cd VMs  # Переходим в папку с Dockerfile
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
-        
+          docker network create hawk-network
           docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
 
       - name: Wait for the application to start
