@@ -56,4 +56,4 @@ jobs:
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
           codeScanningAlerts: true
-          #githubToken: ${{ github.token }}
+          
