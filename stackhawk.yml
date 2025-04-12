@@ -5,4 +5,4 @@ app:
   # -- The environment for the applicationId defined in the StackHawk platform. --
   env: local # (required)
   # -- The url of your application to scan --
-  host: http://:8443 # (required)
+  host: http://0.0.0.0:8443 # (required)
