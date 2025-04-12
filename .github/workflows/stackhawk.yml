@@ -19,23 +19,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build Docker image
+      - name: Build Docker image and run container
         run: |
-          cd VMs  # Переходим в папку с Dockerfile
+          cd VMs  
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
-          docker network create hawk-network
-          docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark /bin/bash -c "git pull && ./runRemoteAccessibleBenchmark.sh" &  
+          docker network create hawk-network || true  
+          docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
 
-      # Afterwards, the action pulls down the correct version of HawkScan, in this instance 2.0.0. Then it runs HawkScan
-      # against the application using the referenced API Key that was saved to the repo as a secret, and the HawkScan
-      # configuration file stackhawk-actions.yml. It also stores information about the pull request event including the
-      # commit SHA and branch name and stores them to the variable names COMMIT_SHA and BRANCH_NAME.
-      - name: HawkScan
+      - name: Check running containers
+        run: docker ps
+
+      - name: Wait for the application to start
+        run: sleep 30  
+
+      - name: Get container IP address
+        id: get_ip
+        run: |
+          CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' your-app-container-name)
+          echo "Container IP is $CONTAINER_IP"
+          echo "::set-output name=container_ip::$CONTAINER_IP"
+
+      - name: Run HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-          configurationFiles: stackhawk.yml
+          targetUrl: http://${{ steps.get_ip.outputs.container_ip }}:8443
+          configurationFiles: stackhawk.yml 
