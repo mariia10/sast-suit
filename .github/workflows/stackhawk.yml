@@ -39,7 +39,7 @@ jobs:
 
       - name: Check if the application is running
         run: |
-          if ! curl --silent --fail http://localhost:8443; then
+          if ! curl --silent --fail http://your-app-container-name:8443; then
             echo "Application is not reachable"
             exit 1
           fi
