@@ -44,5 +44,4 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-          targetUrl: http://${{ steps.get_ip.outputs.container_ip }}:8443
-          configurationFiles: stackhawk.yml 
+          #configurationFiles: stackhawk.yml 
