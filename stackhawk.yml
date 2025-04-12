@@ -1,29 +1,8 @@
-name: StackHawk Actions
-# Controls when the workflow will run
-on:
-  push:
-    branches: [ "main" ]
-   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This is the job of running the Javaspringvulny application and then running HawkScan to test it
-  stackhawk-hawkscan:
-    # This is the OS we chose to run the project on
-    runs-on: ubuntu-latest
-    # These are the sequential steps for running the action
-    steps:
-      # First, the action checks out the repo to get the latest version
-      - name: Check out Repo!
-        uses: actions/checkout@v2
-      # Next, the action builds and runs the Javaspringvulny application in a Docker container
-      - name: Build and Run Vulny!
-        run: ./runBenchmark.sh &
-      # Afterwards, the action pulls down the correct version of HawkScan, in this instance 2.0.0. Then it runs HawkScan
-      # against the application using the referenced API Key that was saved to the repo as a secret, and the HawkScan
-      # configuration file stackhawk-actions.yml. It also stores information about the pull request event including the
-      # commit SHA and branch name and stores them to the variable names COMMIT_SHA and BRANCH_NAME.
-      - name: HawkScan
-        uses: stackhawk/hawkscan-action@v2
-        with:
-          apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-          configurationFiles: stackhawk.yml
+# -- stackhawk configuration for  --
+app:
+  # -- An applicationId obtained from the StackHawk platform. --
+  applicationId: 0ce26d8f-5101-4fc7-a2cf-e6725e663029 # (required)
+  # -- The environment for the applicationId defined in the StackHawk platform. --
+  env: Development # (required)
+  # -- The url of your application to scan --
+  host: https://example.com # (required)
