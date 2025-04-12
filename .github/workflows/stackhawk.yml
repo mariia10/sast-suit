@@ -28,8 +28,7 @@ jobs:
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
         
-          chmod +x runDockerImage.sh  
-          ./runDockerImage.sh &  
+          docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
 
       - name: Wait for the application to start
         run: sleep 30  # Даем время приложению запуститься (можно настроить по необходимости)
