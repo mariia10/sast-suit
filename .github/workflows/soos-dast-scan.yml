@@ -12,9 +12,19 @@ jobs:
     name: SOOS DAST Analysis
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Check out the repository
-         uses: actions/checkout@v2
+      # These are the sequential steps for running the action
+
+      - name: Check out Repo!
+        uses: actions/checkout@v2
+  
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+  
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+     
       - name: Build and run Docker containers
         run: |
           cd VMs
