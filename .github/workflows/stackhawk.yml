@@ -1,38 +1,26 @@
-name: StackHawk Actions
-# Controls when the workflow will run
+name: Build and Test
 on:
-  push:
-    branches: [ "main" ]
-   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  push: 
+    branches:
+      - main
+  pull_request:
 jobs:
-  # This is the job of running the Javaspringvulny application and then running HawkScan to test it
-  stackhawk-hawkscan:
-    # This is the OS we chose to run the project on
-    runs-on: ubuntu-latest
-    # These are the sequential steps for running the action
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-20.04
     steps:
-      - name: Check out Repo!
+      - name: Check Out Code
         uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-      - name: Build and run your service
-        run: |
-          cd VMs  # Папка с вашим Dockerfile или кодом приложения
-          docker build -t benchmark .  # Соберите ваш образ приложения
-          docker-compose up -d
-
-
-
-      - name: HawkScan
-        uses: stackhawk/hawkscan-action@v2
+      - name: Install Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Install Dependencies
+        run: npm clean-install
+      - name: Daemonize our Node API service
+        run: nohup npm run start &
+      - name: Run HawkScan
+        uses: stackhawk/hawkscan-action@v1.3.1
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
           configurationFiles: stackhawk.yml
