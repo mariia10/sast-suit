@@ -26,7 +26,7 @@ jobs:
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
           docker network create hawk-network || true  
-          docker run --rm --detach --publish 8080:80 --name nginx_test nginx
+          docker run --rm --detach --name benchmark --network hawk-network --publish 8080:8080 benchmark
           
       - name: Check running containers
         run: docker ps
