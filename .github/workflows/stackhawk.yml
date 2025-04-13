@@ -20,8 +20,8 @@ jobs:
       #  uses: docker/setup-buildx-action@v1
      #docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
 
-      - name: Build Docker image and run container
-        run: |
+      #- name: Build Docker image and run container
+      - run: |
           cd VMs  
           docker-compose up -d
           
