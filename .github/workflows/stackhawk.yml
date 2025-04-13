@@ -16,8 +16,8 @@ jobs:
       - name: Check out Repo!
         uses: actions/checkout@v2
       # Next, the action builds and runs the Javaspringvulny application in a Docker container
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      #- name: Set up Docker Buildx
+      #  uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image and run container
         run: |
@@ -37,12 +37,5 @@ jobs:
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
           configurationFiles: stackhawk.yml 
-          #host: http://$(steps.get_ip.outputs.container_ip):8443
-      #- name: Run HawkScan
-        #uses: stackhawk/hawkscan-action@v2
-
-       # with:
-       #   targetUrl: http://localhost:8443  # Или используйте IP-адрес вашего хоста
-        #  apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-        #  configurationFiles: stackhawk.yml 
+    
           
