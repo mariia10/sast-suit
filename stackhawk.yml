@@ -1,7 +1,7 @@
 # -- stackhawk configuration for  --
 app:
   # -- An applicationId obtained from the StackHawk platform. --
-  applicationId: b6ded0e4-3443-4986-a7d4-039bcf8739a5 # (required)
+  applicationId: 57a19139-8114-4de9-b4d7-43b81babbdfb # (required)
   # -- The environment for the applicationId defined in the StackHawk platform. --
   env: Development # (required)
   # -- The url of your application to scan --
