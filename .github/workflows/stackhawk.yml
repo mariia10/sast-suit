@@ -25,40 +25,23 @@ jobs:
           docker network create hawk-network || true
           docker run --rm --detach --name myapp_container --network hawk-network myapp
 
-      - name: Create Nginx config file
-        run: |
-              echo "server {
-                  listen 80;
-                  location / {
-                      proxy_pass http://myapp_container:8080; 
-                      proxy_set_header Host \$host;
-                      proxy_set_header X-Real-IP \$remote_addr;
-                      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto \$scheme;
-                  }
-              }" > nginx.conf
-    
-      - name: Run Nginx with custom config
-        run: |
-              docker run --rm --detach --name nginx_test --network hawk-network -p 8080:80 -v $(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf nginx || (echo "Nginx failed to start" && exit 1)
-    
-      - name: Check Nginx logs for errors
-        run: |
-              docker logs nginx_test || echo "No logs available"
-            
-          
-      - name: Check running containers
-        run: docker ps
-
       - name: Wait for the application to start
-        run: sleep 60  
-
+        run: |
+            for i in {1..10}; do
+              if curl -s "http://myapp_container:8080" > /dev/null; then
+                echo "Application is up!"
+                break
+              fi
+              echo "Waiting for the application to start..."
+              sleep 6
+            done  
+  
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-          #dryRun: true
-          configurationFiles: stackhawk.yml 
+          targetUrl: http://myapp_container:8080
+          configurationFiles: stackhawk.yml
           
     
           
