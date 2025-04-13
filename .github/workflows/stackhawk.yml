@@ -22,7 +22,7 @@ jobs:
       - name: Build and run your service
         run: |
           cd VMs  # Папка с вашим Dockerfile или кодом приложения
-          docker build -t myapp .  # Соберите ваш образ приложения
+          docker build -t benchmark .  # Соберите ваш образ приложения
           docker-compose up -d
 
 
