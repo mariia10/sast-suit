@@ -1,42 +1,62 @@
+name: StackHawk Actions
+
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-  soos:
-    permissions:
-      security-events: write # for uploading code scanning alert info
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    name: SOOS DAST Analysis
+  stackhawk-hawkscan:
     runs-on: ubuntu-latest
-    steps:
-      # These are the sequential steps for running the action
 
+    steps:
       - name: Check out Repo!
         uses: actions/checkout@v2
-  
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-  
-      - name: Set up Docker Compose
+
+      - name: Build and start services with Docker Compose
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-     
-      - name: Build and run Docker containers
-        run: |
-          cd VMs
+          # Create a simple Docker Compose file
+          echo "version: '3'
+          services:
+            myapp:
+              build:
+                context: ./VMs
+                dockerfile: Dockerfile
+              ports:
+                - '8080:8080'
+            nginx:
+              image: nginx
+              ports:
+                - '8080:80'
+              volumes:
+                - ./nginx.conf:/etc/nginx/conf.d/default.conf
+              depends_on:
+                - myapp
+          " > docker-compose.yml
+
+          # Start the services
           docker-compose up -d
 
-      - name: Wait for Docker Container to be ready
+      - name: Wait for the application to start
         run: |
-          echo "Waiting for Docker container to start..."
-          sleep 30 # Adjust according to your application startup time
+          echo "Waiting for the application to fully start..."
+          sleep 60  # Adjust based on your application's startup time
 
-      - name: Run SOOS DAST Analysis
-        run: |
-          docker-compose run soos-dast
+      - name: Verify services are running
+        run: docker-compose ps
+
+      - name: Run HawkScan
+        uses: stackhawk/hawkscan-action@v2
+        with:
+          apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y  # Use GitHub secrets for sensitive data
+          # Specify the base URL for HawkScan to target
+          configurationFiles: stackhawk.yml
+    
+      - name: Tear down the services
+        if: always()  # Ensure this runs even if previous steps fail
+        run: docker-compose down
+
 
           
