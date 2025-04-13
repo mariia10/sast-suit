@@ -22,7 +22,7 @@ jobs:
         run: |
           cd VMs  # Папка с вашим Dockerfile
           docker build -t myapp .  # Соберите ваш образ
-          docker network create hawk-network
+          docker network create hawk-network || true
           docker run --rm --detach --name myapp_container --network hawk-network myapp
 
           - name: Create Nginx config file
