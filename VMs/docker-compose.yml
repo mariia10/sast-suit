@@ -2,6 +2,8 @@ version: "3.9"
 
 services:
   benchmark:
-    image: benchmark
+    build:
+      context: .
+      dockerfile: Dockerfile  # Укажите путь к вашему Dockerfile, если он находится в другой папке
     ports:
       - "8080:80"

@@ -26,7 +26,7 @@ jobs:
       - name: Build and run your service
         run: |
           cd VMs  # Папка с вашим Dockerfile или кодом приложения
-          docker-compose up -d
+          docker-compose up
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
