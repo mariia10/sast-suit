@@ -21,6 +21,9 @@ jobs:
       - name: Build Docker image and run container
         run: |
           cd VMs
+          chmod +x buildDockerImage.sh 
+          ./buildDockerImage.sh  
+          docker network create hawk-network || true  
           docker-compose up -d
           
       - name: Check running containers
