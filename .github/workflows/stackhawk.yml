@@ -24,8 +24,8 @@ jobs:
           docker build -t myapp .  # Соберите ваш образ
           docker run --rm --detach --name myapp_container myapp  # Запустите контейнер вашего приложения
 
-          - name: Create Nginx config file
-          run: |
+      - name: Create Nginx config file
+        run: |
             echo "server {
                 listen 80;
                 location / {
@@ -37,12 +37,12 @@ jobs:
                 }
             }" > nginx.conf
   
-        - name: Run Nginx with custom config
-          run: |
+      - name: Run Nginx with custom config
+        run: |
             docker run --rm --detach --name nginx_test -p 8080:80 -v $(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf nginx || (echo "Nginx failed to start" && exit 1)
   
-        - name: Check Nginx logs for errors
-          run: |
+      - name: Check Nginx logs for errors
+        run: |
             docker logs nginx_test || echo "No logs available"
           
       - name: Check running containers
