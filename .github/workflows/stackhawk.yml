@@ -19,7 +19,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       
-        - name: Build and run your service
+      - name: Build and run your service
         run: |
           cd VMs  # Папка с вашим Dockerfile или кодом приложения
           docker build -t myapp .  # Соберите ваш образ приложения
@@ -40,9 +40,6 @@ jobs:
 
           docker run --rm --detach --name nginx_test -p 8080:80 -v $(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf nginx
 
-      - name: Run HawkScan
-        uses: stackhawk/hawkscan-action@v2
-        with:
 
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
