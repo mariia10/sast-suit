@@ -23,7 +23,7 @@ jobs:
           cd VMs
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
-          docker run -d --name benchmark --network hawk-network -p 8080:8080 benchmark &  
+          docker run -d --name benchmark -p 8080:8080 benchmark &  
           
       - name: Check running containers
         run: docker ps
