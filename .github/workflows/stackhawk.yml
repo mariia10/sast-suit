@@ -24,21 +24,16 @@ jobs:
           cd VMs  
           chmod +x buildDockerImage.sh 
           ./buildDockerImage.sh  
-          docker network create hawk-network
-
+          docker network create hawk-network || true  
+          docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
       - name: Check running containers
         run: docker ps
 
       - name: Wait for the application to start
-        run: sleep 30  
+        run: sleep 60  
 
       - name: Run HawkScan
-        #uses: stackhawk/hawkscan-action@v2
-       # with:
-         # apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-        run: |
-            docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            benchmark hawkscan --url http://localhost:5000
-          
-          #configurationFiles: stackhawk.yml 
+        uses: stackhawk/hawkscan-action@v2
+        with:
+          apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
+          configurationFiles: stackhawk.yml 
