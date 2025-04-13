@@ -41,7 +41,7 @@ jobs:
           api_key: ZGJkOWYzNmItM2NhYS00OTk0LTkyNWQtMzc5NjJhNTM1YjI5
           project_name: "sast-suit"
           scan_mode: "baseline"
-          target_url: "http://${{ env.CONTAINER_IP }}:80"  # Используйте IP-адрес контейнера
+          target_url: "http://127.0.0.1:8080"  # Используйте IP-адрес контейнера
           export_format: "Sarif"
           export_file_type: "Json"
       
