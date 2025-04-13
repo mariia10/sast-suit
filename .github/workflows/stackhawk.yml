@@ -30,7 +30,7 @@ jobs:
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
-          apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
+          apiKey: hawk.SDft8Tj52RT1rJIyTSsE.nqxqrX6ncclcGKcDH3iu
           #configurationFiles: stackhawk.yml
           
     
