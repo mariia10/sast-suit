@@ -1,9 +1,21 @@
-version: "3.9"
+version: '3'
 
 services:
-  benchmark:
-    build:
-      context: .
-      dockerfile: Dockerfile  # Укажите путь к вашему Dockerfile, если он находится в другой папке
+  my-app:
+    build: .
     ports:
       - "8080:80"
+  
+  soos-dast:
+    image: soos-io/soos-dast-github-action
+    depends_on:
+      - my-app
+    environment:
+      CLIENT_ID: op5yzx65t
+      API_KEY: ZGJkOWYzNmItM2NhYS00OTk0LTkyNWQtMzc5NjJhNTM1YjI5
+      PROJECT_NAME: "sast-suit"
+      SCAN_MODE: "baseline"
+      TARGET_URL: "http://my-app:80" # Ссылайтесь на контейнер my-app
+      EXPORT_FORMAT: "Sarif"
+      EXPORT_FILE_TYPE: "Json"
+
