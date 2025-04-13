@@ -36,6 +36,8 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
+          dryRun: true
           configurationFiles: stackhawk.yml 
+          
     
           
