@@ -25,17 +25,6 @@ jobs:
           docker network create hawk-network || true
           docker run --rm --detach --name myapp_container --network hawk-network myapp
 
-      - name: Wait for the application to start
-        run: |
-            for i in {1..10}; do
-              if curl -s "http://myapp_container:8080" > /dev/null; then
-                echo "Application is up!"
-                break
-              fi
-              echo "Waiting for the application to start..."
-              sleep 6
-            done  
-  
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
