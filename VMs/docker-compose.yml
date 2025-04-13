@@ -1,11 +1,7 @@
 version: "3.9"
 
 services:
-  benchmark-java:
-    build:
-      context: .
-      dockerfile: Dockerfile  # Укажите путь к вашему Dockerfile, если он находится в другой папке
+  benchmark:
+    image: benchmark
     ports:
-      - "8080:8080"  # Маппинг порта 8080 на хосте к порту 8080 в контейнере
-    environment:
-      - JAVA_OPTS=-Dserver.port=8080  # Убедитесь, что ваше приложение слушает на этом порту
+      - "8080:80"
