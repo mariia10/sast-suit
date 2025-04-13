@@ -55,7 +55,7 @@ jobs:
       - name: Run HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
-          apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y  # Use GitHub secrets for sensitive data
+          apiKey: hawk.0NqxByCIfHvHe2itsjI5.WUai04MsNoCohWBqNvrW  # Use GitHub secrets for sensitive data
           # Specify the base URL for HawkScan to target
           configurationFiles: stackhawk.yml
     
