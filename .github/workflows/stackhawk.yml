@@ -37,7 +37,7 @@ jobs:
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
           configurationFiles: stackhawk.yml 
-          host: http://$(steps.get_ip.outputs.container_ip):8443
+          #host: http://$(steps.get_ip.outputs.container_ip):8443
       #- name: Run HawkScan
         #uses: stackhawk/hawkscan-action@v2
 
