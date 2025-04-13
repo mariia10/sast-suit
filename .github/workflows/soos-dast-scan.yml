@@ -57,7 +57,7 @@ jobs:
         with:
           apiKey: hawk.0NqxByCIfHvHe2itsjI5.WUai04MsNoCohWBqNvrW  # Use GitHub secrets for sensitive data
           # Specify the base URL for HawkScan to target
-          configurationFiles: stackhawk.yml
+          #configurationFiles: stackhawk.yml
     
       - name: Tear down the services
         if: always()  # Ensure this runs even if previous steps fail
