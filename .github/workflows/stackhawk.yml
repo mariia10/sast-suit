@@ -12,17 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     # These are the sequential steps for running the action
     steps:
-      # First, the action checks out the repo to get the latest version
       - name: Check out Repo!
         uses: actions/checkout@v2
-      # Next, the action builds and runs the Javaspringvulny application in a Docker container
-      #- name: Set up Docker Buildx
-      #  uses: docker/setup-buildx-action@v1
-     #docker run -d --name your-app-container-name --network hawk-network -p 8443:8443 benchmark &  
 
-      #- name: Build Docker image and run container
-      - run: |
-          cd VMs  
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io docker-compose
+          sudo systemctl start docker
+          sudo systemctl enable docker
+      
+      - name: Build Docker image and run container
+        run: |
+          cd VMs
           docker-compose up -d
           
       - name: Check running containers
