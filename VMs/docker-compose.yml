@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  benchmarkjava:
+    ports:
+      - "8080:80"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: benchmarkjava-container
+    environment:
+      - TZ=UTC  # Установите временную зону, если необходимо
+    volumes:
+      - benchmark_data:/owasp  # Пример тома для сохранения данных
+    command: ["timeout", "60", "./runBenchmark.sh"]
+
+volumes:
+  benchmark_data:
