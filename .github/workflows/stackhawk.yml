@@ -21,15 +21,13 @@ jobs:
       - name: Build and run your service
         run: |
           cd VMs  # Папка с вашим Dockerfile
-          docker build -t myapp .  # Соберите ваш образ
-          docker network create hawk-network || true
-          docker run --rm --detach --name myapp_container --network hawk-network myapp
+          docker build -t benchmark .  # Соберите ваш образ
+          sudo docker-compose up -d
 
       - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
-          targetUrl: http://myapp_container:8080
           configurationFiles: stackhawk.yml
           
     
