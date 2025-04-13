@@ -2,8 +2,6 @@ version: '3.8'
 
 services:
   benchmarkjava:
-    ports:
-      - "8080:80"
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,6 +11,8 @@ services:
     volumes:
       - benchmark_data:/owasp  # Пример тома для сохранения данных
     command: ["timeout", "60", "./runBenchmark.sh"]
+    ports:
+      - "8080:80"
 
 volumes:
   benchmark_data:

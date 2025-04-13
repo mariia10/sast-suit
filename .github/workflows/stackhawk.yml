@@ -21,7 +21,7 @@ jobs:
           sudo apt-get install -y docker.io docker-compose
           sudo systemctl start docker
           sudo systemctl enable docker
-      
+
       - name: Build Docker image and run container
         run: |
           cd VMs
