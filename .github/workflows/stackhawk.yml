@@ -32,8 +32,17 @@ jobs:
       - name: Wait for the application to start
         run: sleep 60  
 
-      - name: Run HawkScan
+      - name: HawkScan
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
           configurationFiles: stackhawk.yml 
+          host: http://$(steps.get_ip.outputs.container_ip):8443
+      #- name: Run HawkScan
+        #uses: stackhawk/hawkscan-action@v2
+
+       # with:
+       #   targetUrl: http://localhost:8443  # Или используйте IP-адрес вашего хоста
+        #  apiKey: hawk.V1tQcRl8ysFwWSuBIiET.c7gliJIbsEa6aFefDU9Y
+        #  configurationFiles: stackhawk.yml 
+          
