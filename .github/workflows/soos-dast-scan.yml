@@ -35,6 +35,11 @@ jobs:
     name: SOOS DAST Analysis
     runs-on: ubuntu-latest
     steps:
+        # First, the action checks out the repo to get the latest version
+      - run: |
+          cd VMs  
+          docker build -t benchmark .
+          docker run -d --name your-app-container-name -p 8443:8443 benchmark &  
       - name: Run SOOS DAST Analysis
         uses: soos-io/soos-dast-github-action@a7eb40b94c1c81eb76b178ba1befdc21823f86fa
         with:
@@ -42,7 +47,7 @@ jobs:
           api_key: ZGJkOWYzNmItM2NhYS00OTk0LTkyNWQtMzc5NjJhNTM1YjI5
           project_name: "marria10/sast-suit"
           scan_mode: "baseline"
-          target_url: "https://localhost:8443/benchmark"
+          target_url: "https://your-app-container-name:8443/benchmark"
           export_format: "Sarif"
           export_file_type: "Json"
       - name: Find and rename SARIF file since it is unique
