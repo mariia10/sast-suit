@@ -35,6 +35,8 @@ jobs:
     name: SOOS DAST Analysis
     runs-on: ubuntu-latest
     steps:
+      - name: Check out Repo!
+        uses: actions/checkout@v2
         # First, the action checks out the repo to get the latest version
       - run: |
           cd VMs  
